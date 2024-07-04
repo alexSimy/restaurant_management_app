@@ -1,14 +1,16 @@
 require('dotenv').config();
 import { Pool } from 'pg';
+import { Options, Sequelize } from 'sequelize';
 
-const connectionOptions = {
+const connectionOptions: Options = {
+  dialect: 'postgres',
   host: process.env.PG_HOST as string,
-  user: process.env.PG_USER as string,
+  username: process.env.PG_USER as string,
   port: parseInt(process.env.PG_PORT as string),
   password: process.env.PG_PASSWORD as string,
   database: process.env.PG_DB as string,
 };
 
-const pool = new Pool(connectionOptions);
+const postgresqlSeq = new Sequelize(connectionOptions);
 
-export default pool;
+export default postgresqlSeq;

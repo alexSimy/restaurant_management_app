@@ -1,59 +1,60 @@
 import { Query, Resolver, Mutation, Arg } from 'type-graphql';
 import { Restaurant } from './restaurant.schema';
-
+import * as restaurantsModel from './restaurants.model';
 @Resolver(() => Restaurant)
 export class RestaurantResolver {
-  @Query(() => Restaurant)
+  @Query(() => [Restaurant])
   async restaurants(
-    @Arg('page') page: number,
-    @Arg('pageSize') pageSize: number
-  ): Promise<Restaurant> {
-    return { id: 1, name: '', address: '', email: '', phone: '' };
-    //return await restaurantsModel.getRestaurants(page, pageSize); // WithPagination
+    @Arg('page', () => Number) page: number,
+    @Arg('pageSize', () => Number) pageSize: number
+  ): Promise<Restaurant[]> {
+    return await restaurantsModel.getRestaurants(page, pageSize);
   }
 
-  @Query(() => Restaurant)
+  @Query(() => [Restaurant])
   async searchRestaurants(
-    @Arg('searchTerm') searchTerm: string,
-    @Arg('page') page: number,
-    @Arg('pageSize') pageSize: number
-  ): Promise<Restaurant> {
-    return { id: 1, name: '', address: '', email: '', phone: '' };
-    //return await restaurantsModel.filterRestaurantsBySearchTerm(searchTerm, page, pageSize); // WithPagination
+    @Arg('searchTerm', () => String) searchTerm: string,
+    @Arg('page', () => Number) page: number,
+    @Arg('pageSize', () => Number) pageSize: number
+  ): Promise<Restaurant[]> {
+    return await restaurantsModel.filterRestaurantsBySearchTerm(
+      searchTerm,
+      page,
+      pageSize
+    );
   }
-
-  //• createRestaurant(name, address, email, phone)
-  //• updateRestaurant(id, name, address, email, phone)
-  //• deleteRestaurant(id)
 
   @Mutation(() => Restaurant)
   async createRestaurant(
-    @Arg('name') name: string,
-    @Arg('address') address: string,
-    @Arg('email') email: string,
-    @Arg('phone') phone: string
+    @Arg('name', () => String) name: string,
+    @Arg('address', () => String) address: string,
+    @Arg('email', () => String) email: string,
+    @Arg('phone', () => String) phone: string
   ): Promise<Restaurant | undefined> {
-    return { id: 1, name: '', address: '', email: '', phone: '' };
-    // return await restaurantsModel.addRestaurant(name, address, email, phone);
+    return await restaurantsModel.createRestaurant(name, address, email, phone);
   }
 
   @Mutation(() => Restaurant)
   async updateRestaurant(
-    @Arg('id') id: number,
-    @Arg('name') name: string,
-    @Arg('address') address: string,
-    @Arg('email') email: string,
-    @Arg('phone') phone: string
+    @Arg('id', () => Number) id: number,
+    @Arg('name', () => String) name: string,
+    @Arg('address', () => String) address: string,
+    @Arg('email', () => String) email: string,
+    @Arg('phone', () => String) phone: string
   ): Promise<Restaurant | undefined> {
-    return { id: 1, name: '', address: '', email: '', phone: '' };
-    // return await restaurantsModel.updateRestaurant(name, address, email, phone);
+    return await restaurantsModel.updateRestaurant(
+      id,
+      name,
+      address,
+      email,
+      phone
+    );
   }
 
   @Mutation(() => Restaurant)
   async deleteRestaurant(
-    @Arg('id') id: number
+    @Arg('id', () => Number) id: number
   ): Promise<Restaurant | undefined> {
-    return { id: 1, name: '', address: '', email: '', phone: '' };
-    // return await restaurantsModel.deleteRestaurant(id);
+    return await restaurantsModel.deleteRestaurant(id);
   }
 }

@@ -2,14 +2,14 @@ import { Field, ObjectType, InputType } from 'type-graphql';
 
 @ObjectType()
 export class Restaurant {
-  @Field()
+  @Field((type) => Number)
   id!: number;
-  @Field()
+  @Field((type) => String)
   name!: string;
-  @Field()
+  @Field((type) => String)
   address!: string;
-  @Field()
+  @Field((type) => String)
   email!: string;
-  @Field()
+  @Field((type) => String)
   phone!: string;
 }
