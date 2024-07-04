@@ -32,7 +32,6 @@ export async function filterRestaurantsBySearchTerm(
     limit: pageSize > 0 ? pageSize : undefined,
     subQuery: false,
   });
-  console.log('filterRestaurantsBySearchTerm', records);
 
   return records;
 }

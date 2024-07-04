@@ -6,58 +6,52 @@ import {
   Model,
 } from 'sequelize';
 import postgresqlSeq from '../../services/postgresql';
-import { Restaurant } from './restaurant.schema';
 
-interface RestaurantModel
+interface UserModel
   extends Model<
-    InferAttributes<RestaurantModel>,
-    InferCreationAttributes<RestaurantModel>
+    InferAttributes<UserModel>,
+    InferCreationAttributes<UserModel>
   > {
   // Some fields are optional when calling UserModel.create() or UserModel.build()
   id: CreationOptional<number>;
-  name: string;
-  address: string;
-  email: string;
-  phone: string;
+  username: string;
+  password: string;
+  token: string;
 }
 
-const restaurants = postgresqlSeq.define<RestaurantModel>(
-  'Restaurant',
+const users = postgresqlSeq.define<UserModel>(
+  'Users',
   {
     id: {
       type: DataTypes.INTEGER.UNSIGNED,
       autoIncrement: true,
       primaryKey: true,
     },
-    name: {
+    username: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    address: {
+    password: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    email: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    phone: {
+    token: {
       type: DataTypes.STRING,
       allowNull: false,
     },
   },
   {
-    tableName: 'restaurant',
+    tableName: 'users',
   }
 );
 
 postgresqlSeq
   .sync({ force: false })
   .then(function () {
-    console.log('CONNECTION ESTABLISHED SUCCESSFULLY FOR restaurant TABLE');
+    console.log('CONNECTION ESTABLISHED SUCCESSFULLY FOR users TABLE');
   })
   .catch(function () {
-    console.log('CONNECTION REFUSED FOR restaurant TABLE');
+    console.log('CONNECTION REFUSED FOR users TABLE');
   });
 
-export default restaurants;
+export default users;

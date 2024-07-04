@@ -1,7 +1,14 @@
 import express from 'express';
+import {
+  httpCreateUser,
+  httpGetUser,
+  httpGetUserByToken,
+} from './users.controller';
 
 const usersRouter = express.Router();
 
-// maybe use graphsql and apolo server as well
+usersRouter.post('/', httpGetUserByToken);
+usersRouter.post('/login', httpGetUser);
+usersRouter.post('/register', httpCreateUser);
 
 export default usersRouter;
