@@ -10,6 +10,8 @@ Second day: 🕒 15:02 - 19:06 🕖
 - Sadly, no tests were added.
 - Implement a database seed that will insert 100 randomly generated restaurants in
 the database. To generate random data you can use chance.js or similar.
+- forgot to stop the default action of the form in `AddRestaurant` Modal.
+- forgot to close the `AddRestaurant` Modal after creating new restaurant.
 
 #### What to improve later ####
 - Move `themes` into redux store or Context
