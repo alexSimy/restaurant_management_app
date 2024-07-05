@@ -1,6 +1,6 @@
 import 'reflect-metadata';
 import cors from 'cors';
-import express from 'express';
+import express, { Request, Response } from 'express';
 import morgan from 'morgan';
 import createAPIRouter from './routes/api';
 
@@ -19,6 +19,10 @@ async function createExpressApp() {
   const api = await createAPIRouter();
   app.use('/api/v1', api);
 
+  app.use((error: Error, req: Request, res: Response, next: () => any) => {
+    console.log(error);
+    res.status(401).json({ ok: false, message: error.message });
+  });
   return app;
 }
 export default createExpressApp;
