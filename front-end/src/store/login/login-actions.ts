@@ -3,6 +3,15 @@ import { loginActions } from './login-slice';
 import { notificationActions } from '../notification/notification-slice';
 import Cookie from 'js-cookie';
 
+const checkInputs = (username: string, password: string) => {
+  return (
+    username !== '' &&
+    username.length > 2 &&
+    password !== '' &&
+    password.length > 2
+  );
+};
+
 export const checkLoginState = () => {
   const action = (dispatch: AppDispatch) => {
     const cookieToken = Cookie.get('token');
@@ -41,6 +50,15 @@ export const loginAction = (username: string, password: string) => {
     };
 
     try {
+      if (!checkInputs(username, password)) {
+        dispatch(
+          notificationActions.setMessage({
+            status: 'error',
+            message: 'Invalid username or password!',
+          })
+        );
+        return;
+      }
       const userDataToken = await postLogin(username, password);
       if (userDataToken) {
         dispatch(loginActions.setToken(userDataToken));
@@ -90,6 +108,15 @@ export const registerAction = (username: string, password: string) => {
     };
 
     try {
+      if (!checkInputs(username, password)) {
+        dispatch(
+          notificationActions.setMessage({
+            status: 'error',
+            message: 'Invalid username or password!',
+          })
+        );
+        return;
+      }
       const userDataToken = await postLogin(username, password);
       if (userDataToken) {
         dispatch(loginActions.setToken(userDataToken));

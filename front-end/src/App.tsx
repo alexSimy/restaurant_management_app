@@ -5,6 +5,9 @@ import { checkLoginState } from './store/login/login-actions';
 import { RootState } from './store';
 import { UnknownAction } from '@reduxjs/toolkit';
 import Header from './components/Header/Header';
+import Notification from './components/Notification/Notification';
+import Auth from './components/Auth/Auth';
+import RestaurantManager from './components/RestaurantManager/RestaurantManager';
 
 function App() {
   const authToken = useSelector((state: RootState) => state.login.token);
@@ -19,7 +22,16 @@ function App() {
   return (
     <>
       <Header />
-      <div className='App'>Starting ...</div>
+      {notification.status && notification.message && (
+        <Notification
+          status={notification.status}
+          message={notification.message}
+        />
+      )}
+      <div className='App'>
+        {!authToken && <Auth />}
+        {authToken && <RestaurantManager />}
+      </div>
     </>
   );
 }
