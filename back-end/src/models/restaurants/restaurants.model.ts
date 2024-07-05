@@ -1,13 +1,13 @@
 import { Op, SequelizeScopeError } from 'sequelize';
-import { Restaurant } from './restaurant.schema';
+import { Restaurant, RestaurantsWithCount } from './restaurant.schema';
 import restaurants from './restaurants.sequalize';
 
 export async function getRestaurants(
   page: number,
   pageSize: number
-): Promise<Restaurant[]> {
+): Promise<RestaurantsWithCount> {
   const offset = (page - 1) * pageSize;
-  const records = await restaurants.findAll({
+  const records = await restaurants.findAndCountAll({
     offset: offset > 0 ? offset : 0,
     limit: pageSize > 0 ? pageSize : undefined,
     subQuery: false,
@@ -20,9 +20,9 @@ export async function filterRestaurantsBySearchTerm(
   searchTerm: string,
   page: number,
   pageSize: number
-): Promise<Restaurant[]> {
+): Promise<RestaurantsWithCount> {
   const offset = (page - 1) * pageSize;
-  const records = await restaurants.findAll({
+  const records = await restaurants.findAndCountAll({
     where: {
       name: {
         [Op.substring]: searchTerm,

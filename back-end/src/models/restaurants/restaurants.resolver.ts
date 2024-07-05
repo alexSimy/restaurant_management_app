@@ -1,22 +1,35 @@
 import { Query, Resolver, Mutation, Arg } from 'type-graphql';
-import { Restaurant } from './restaurant.schema';
+import { Restaurant, RestaurantsWithCount } from './restaurant.schema';
 import * as restaurantsModel from './restaurants.model';
 @Resolver(() => Restaurant)
 export class RestaurantResolver {
-  @Query(() => [Restaurant])
+  @Query(() => RestaurantsWithCount)
   async restaurants(
     @Arg('page', () => Number) page: number,
     @Arg('pageSize', () => Number) pageSize: number
-  ): Promise<Restaurant[]> {
+  ): Promise<RestaurantsWithCount> {
     return await restaurantsModel.getRestaurants(page, pageSize);
   }
 
-  @Query(() => [Restaurant])
+  @Query(() => RestaurantsWithCount)
   async searchRestaurants(
     @Arg('searchTerm', () => String) searchTerm: string,
     @Arg('page', () => Number) page: number,
     @Arg('pageSize', () => Number) pageSize: number
-  ): Promise<Restaurant[]> {
+  ): Promise<RestaurantsWithCount> {
+    return await restaurantsModel.filterRestaurantsBySearchTerm(
+      searchTerm,
+      page,
+      pageSize
+    );
+  }
+
+  @Query(() => RestaurantsWithCount)
+  async countRestaurants(
+    @Arg('searchTerm', () => String) searchTerm: string,
+    @Arg('page', () => Number) page: number,
+    @Arg('pageSize', () => Number) pageSize: number
+  ): Promise<RestaurantsWithCount> {
     return await restaurantsModel.filterRestaurantsBySearchTerm(
       searchTerm,
       page,

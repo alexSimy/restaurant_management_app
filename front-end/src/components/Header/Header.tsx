@@ -1,5 +1,4 @@
 import { Box, Button, Typography } from '@mui/material';
-import React from 'react';
 import { logoutAction } from '../../store/login/login-actions';
 import { useDispatch } from 'react-redux';
 import { UnknownAction } from '@reduxjs/toolkit';

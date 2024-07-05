@@ -8,11 +8,13 @@ import Header from './components/Header/Header';
 import Notification from './components/Notification/Notification';
 import Auth from './components/Auth/Auth';
 import RestaurantManager from './components/RestaurantManager/RestaurantManager';
+import { ApolloProvider } from '@apollo/client';
+import { initApolloClientWithTokenValue } from './services/graphql-utils';
 
 function App() {
   const authToken = useSelector((state: RootState) => state.login.token);
   const notification = useSelector((state: RootState) => state.notification);
-
+  const graphqlClient = initApolloClientWithTokenValue();
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -28,9 +30,14 @@ function App() {
           message={notification.message}
         />
       )}
+
       <div className='App'>
         {!authToken && <Auth />}
-        {authToken && <RestaurantManager />}
+        {authToken && (
+          <ApolloProvider client={graphqlClient}>
+            <RestaurantManager />
+          </ApolloProvider>
+        )}
       </div>
     </>
   );

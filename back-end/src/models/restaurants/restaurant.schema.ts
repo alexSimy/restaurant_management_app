@@ -13,3 +13,11 @@ export class Restaurant {
   @Field((type) => String)
   phone!: string;
 }
+
+@ObjectType()
+export class RestaurantsWithCount {
+  @Field((type) => [Restaurant])
+  rows!: Restaurant[];
+  @Field((type) => Number)
+  count!: number;
+}

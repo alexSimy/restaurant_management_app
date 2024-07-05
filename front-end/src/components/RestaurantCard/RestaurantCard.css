@@ -1,0 +1,15 @@
+.r-card {
+  position: relative;
+}
+.r-card button {
+  visibility: hidden;
+  position: absolute;
+  right: -100px;
+  transition: all ease 0.5s;
+}
+
+.r-card:hover button {
+  visibility: visible;
+  right: 20px;
+  transition: all ease 0.5s;
+}
