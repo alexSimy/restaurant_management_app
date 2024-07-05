@@ -1,8 +1,6 @@
-import React from 'react';
 import { Restaurant } from '../../types/Restaurant';
 import {
   Box,
-  Button,
   Card,
   CardActions,
   CardContent,
@@ -17,8 +15,12 @@ import DeleteButton from '../DeleteButton/DeleteButton';
 
 type RestaurantCardProps = {
   restaurant: Restaurant;
+  handleDelete: (id: number) => void;
 };
-export default function RestaurantCard({ restaurant }: RestaurantCardProps) {
+export default function RestaurantCard({
+  restaurant,
+  handleDelete,
+}: RestaurantCardProps) {
   return (
     <Card
       className='r-card'
@@ -71,7 +73,7 @@ export default function RestaurantCard({ restaurant }: RestaurantCardProps) {
           alignItems: 'flex-end',
         }}
       >
-        <DeleteButton id={restaurant.id} />
+        <DeleteButton id={restaurant.id} handleClick={handleDelete} />
       </CardActions>
     </Card>
   );

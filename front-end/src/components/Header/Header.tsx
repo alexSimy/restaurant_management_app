@@ -20,6 +20,7 @@ export default function Header() {
         position: 'sticky',
         top: '0',
         boxShadow: '#000000ab 0px 1px 20px 0px',
+        zIndex: 9999,
       }}
     >
       <Box
